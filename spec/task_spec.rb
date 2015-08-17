@@ -37,5 +37,16 @@ describe(Task) do
       expect(Task.all()).to(eq([]))
     end
   end
-
+  describe('#==') do
+    it('returns true if theyre both tasks and have the same description')do
+      test_task1 = Task.new('kitten')
+      test_task2 = Task.new('kitten')
+      expect(test_task1.==test_task2).to(eq(true))
+    end
+    it('returns false if descriptions are different') do
+      test_task1 = Task.new('kitten')
+      test_task2 = Task.new('kittens')
+      expect(test_task1.==test_task2).to(eq(false))
+    end
+  end
 end

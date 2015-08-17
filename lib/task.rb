@@ -21,4 +21,10 @@ class Task
   define_singleton_method(:clear) do
     @@task_array = []
   end
+
+  define_method(:==) do |other|
+    same_class = self.class().eql?(other.class())
+    same_description = self.description().eql?(other.description())
+    same_class.&(same_description)
+  end
 end

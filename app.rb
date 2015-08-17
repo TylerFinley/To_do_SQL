@@ -22,6 +22,11 @@ post("/lists") do
   erb(:success)
 end
 
+get("/lists") do
+  @lists = List.all()
+  erb(:lists)
+end
+
 
 # post("/tasks") do
 #   description = params.fetch("description")

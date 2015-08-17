@@ -30,7 +30,7 @@ describe('The To Do List Manager App', {:type => :feature}) do
       expect(page).to have_content(list.name)
     end
   end
-  
+
   describe('viewing spesific list') do
     it("allows a user to view a specific list") do
       list = List.new({:name => 'Test List', :id => nil})
@@ -38,6 +38,17 @@ describe('The To Do List Manager App', {:type => :feature}) do
       visit('/lists')
       click_link('Test List')
       expect(page).to have_content(list.name)
+    end
+  end
+  describe('create new task in a specific list') do
+    it('allows user to create task in a list') do
+      list = List.new({:name => 'whatever', :id => nil})
+      list.save()
+      task = Task.new({:description => 'test', :list_id => list.id, :due_date => Date.new(2015,9,18)})
+      task.save()
+      visit("/lists/#{list.id}")
+      expect(page).to have_content(task.description)
+      expect(page).to have_content(task.due_date)
     end
   end
 end

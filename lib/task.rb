@@ -1,9 +1,9 @@
 class Task
+  attr_reader(:description)
 
-  @@task_array = []
 
-  define_method(:initialize) do |description|
-    @description = description
+  define_method(:initialize) do |attributes|
+    @description = attributes.fetch(:description)
   end
 
   define_method(:description) do
@@ -11,16 +11,19 @@ class Task
   end
 
   define_method(:save) do
-    @@task_array.push(self)
+    DB.exec("INSERT INTO tasks (description) VALUES ('#{@description}');")
   end
 
   define_singleton_method(:all) do
-    @@task_array
+    returned_tasks = DB.exec("SELECT * FROM tasks;")
+    tasks = []
+    returned_tasks.each() do |task|
+      description = task.fetch("description")
+      tasks.push(Task.new({:description => description}))
+    end
+    tasks
   end
 
-  define_singleton_method(:clear) do
-    @@task_array = []
-  end
 
   define_method(:==) do |other|
     same_class = self.class().eql?(other.class())

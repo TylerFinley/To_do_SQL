@@ -63,4 +63,16 @@ describe('The To Do List Manager App', {:type => :feature}) do
       expect(page).to have_content(Date.new(2015,9,18))
     end
   end
+  describe('creates a link back to index') do
+    it('allows user to go back to original page') do
+      list = List.new({:name => 'iam', :id => nil})
+      list.save()
+      visit("/lists/#{list.id}")
+      click_link('Take me Home')
+      expect(page).to have_content('View All Lists')
+      expect(page).to have_content('Add New List')
+    end
+  end
+
+
 end

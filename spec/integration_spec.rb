@@ -17,7 +17,20 @@ describe('The To Do List Manager App', {:type => :feature}) do
       click_link('Add New List')
       fill_in('list_name', :with => 'Weekend Chores')
       click_button('Add List')
+      expect(page).to have_content('Weekend Chores')
       expect(page).to have_content('Success!')
+    end
+  end
+
+  describe('navigating back to index after adding new list') do
+    it('allows user to navigate back to index after adding new list') do
+      visit('/')
+      click_link('Add New List')
+      fill_in('list_name', :with => 'Weekend Chores')
+      click_button('Add List')
+      click_link('Back')
+      expect(page).to have_content('View All Lists')
+      expect(page).to have_content('Add New List')
     end
   end
 

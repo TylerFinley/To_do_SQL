@@ -29,11 +29,20 @@ describe(List) do
       expect(list.id()).to(be_an_instance_of(Fixnum))
     end
   end
+
   describe("#==") do
     it("is the same list if it has the same name") do
-      list1 = List.new({:name => 'Out list', :id => nil})
-      list2 = List.new({:name => 'Out list', :id => nil})
+      list1 = List.new({:name => 'Our list', :id => nil})
+      list2 = List.new({:name => 'Our list', :id => nil})
       expect(list1).to(eq(list2))
+    end
+  end
+  
+  describe(".find") do
+    it("finds the specific list based on the id number") do
+      list1 = List.new({:name => 'Our list', :id => nil})
+      list1.save()
+      expect(List.find(list1.id)).to(eq(list1))
     end
   end
 end

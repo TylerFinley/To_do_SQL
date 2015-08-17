@@ -16,11 +16,21 @@ class List
     end
     lists
   end
+
+  define_singleton_method(:find) do |id|
+    returned_list = DB.exec("SELECT * FROM lists WHERE id = #{id};").first()
+    name = returned_list.fetch("name")
+    List.new({:name => name, :id => id})
+  end
+
   define_method(:save) do
     result = DB.exec("INSERT INTO lists (name) VALUES ('#{@name}') RETURNING id;")
     @id = result.first().fetch("id").to_i()
   end
+
   define_method(:==) do |another_list|
     self.name().==(another_list.name()).&(self.id().==(another_list.id()))
   end
+
+
 end

@@ -27,6 +27,11 @@ get("/lists") do
   erb(:lists)
 end
 
+get('/lists/:id') do
+  id = params.fetch("id")
+  @list = List.find(id)
+  erb(:list)
+end
 
 # post("/tasks") do
 #   description = params.fetch("description")

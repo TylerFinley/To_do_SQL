@@ -38,7 +38,7 @@ describe(Task) do
       expect(test_task.list_id()).to(eq(1))
     end
   end
-  
+
   describe("#due_date") do
     it("lets you grab a due date from a new task") do
       test_task1 = Task.new({:description => 'play frisbee', :list_id => 1, :due_date => Date.new(2015,9,18)})
@@ -62,5 +62,13 @@ describe(Task) do
       expect(Task.sort()).to(eq([test_task2, test_task1]))
     end
   end
-
+  describe(".find") do
+    it("finds all tasks associated with id number") do
+      task1 = Task.new({:description => "play frisbee", :list_id => 1,:due_date => Date.new(2015,9,18)})
+      task2 = Task.new({:description => "play aerobee", :list_id => 2,:due_date => Date.new(2015,9,18)})
+      task1.save()
+      task2.save()
+      expect(Task.find(task1.list_id)).to(eq([task1]))
+    end
+  end
 end

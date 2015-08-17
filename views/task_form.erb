@@ -1,0 +1,11 @@
+<h1>Add a new task for <%= @list.name() %> </h1>
+
+<form action="/lists/<%= @list.id() %>" method="post">
+  <div class="form-group">
+    <label for="task_description">Task Description</label>
+    <input class="form-control" type="text" id="task_description" name="task_description">
+    <label for="due_date">Due Date</label>
+    <input class="form-control" type="date" id="due_date" name="due_date">
+  </div>
+  <button type="submit" class="btn-success">Add Task</button>
+</form>

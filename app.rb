@@ -4,6 +4,7 @@ also_reload("lib/**/*.rb")
 require("./lib/task")
 require("./lib/list")
 require("pg")
+require("date")
 
 DB = PG.connect({:dbname => "to_do"})
 
@@ -30,7 +31,17 @@ end
 get('/lists/:id') do
   id = params.fetch("id")
   @list = List.find(id)
+  @tasks = Task.find(id)
   erb(:list)
+end
+
+post('/lists/:id') do
+    description = params.fetch('task_description')
+    id = params.fetch('id')
+    due_date = Date.parse(params.fetch('due_date'))
+    @task = Task.new({:description => description, :list_id => id, :due_date => due_date})
+    @list = List.find(id)
+    erb(:list)
 end
 
 # post("/tasks") do

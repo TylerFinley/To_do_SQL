@@ -39,9 +39,17 @@ post('/lists/:id') do
     description = params.fetch('task_description')
     id = params.fetch('id')
     due_date = Date.parse(params.fetch('due_date'))
-    @task = Task.new({:description => description, :list_id => id, :due_date => due_date})
+    task = Task.new({:description => description, :list_id => id, :due_date => due_date})
+    task.save()
     @list = List.find(id)
+    @tasks = Task.find(id)
     erb(:list)
+end
+
+get('/lists/:id/tasks/new') do
+  id = params.fetch("id")
+  @list = List.find(id)
+  erb(:task_form)
 end
 
 # post("/tasks") do
